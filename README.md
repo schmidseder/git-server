@@ -7,7 +7,7 @@ Very simple docker configuration for a GIT server via SSH.
 ```
 ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -C "your-name@your-domain"  
 
-echo "AUTHORIZED_KEYS=\"`cat ~/.ssh/id_ed25519.pub`\""`
+echo "AUTHORIZED_KEYS=\"`cat ~/.ssh/id_ed25519.pub`\""
 ````
 ## 2. Server side:
 ```
