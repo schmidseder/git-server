@@ -9,6 +9,6 @@ services:
     volumes:
       - ./repos:/repos
     environment:
-      AUTHORIZED_KEYS: "$$AUTHORIZED_KEYS"
+      AUTHORIZED_KEYS: "${AUTHORIZED_KEYS}"
     restart: unless-stopped
 
