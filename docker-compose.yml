@@ -1,0 +1,14 @@
+# version: '3.8'
+
+services:
+  git-server:
+    build: .
+    container_name: git-server
+    ports:
+      - "2222:22"
+    volumes:
+      - ./repos:/repos
+    environment:
+      AUTHORIZED_KEYS: "$$AUTHORIZED_KEYS"
+    restart: unless-stopped
+
