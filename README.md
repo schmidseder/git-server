@@ -6,7 +6,7 @@ This setup is intended for users who want to host their own Git server to manage
 
 ---  
 
-**Note:** Replace all placeholders such as __your-name__, __your-domain__ and others with your actual values. Additionally, depending on your environment, you might need to prepend `sudo` to Docker commands for them to work correctly. 
+**Note:** Replace all placeholders such as __your-name__, __your-domain__ and __your-public-open-ssh-key-here__ with your actual values. Additionally, depending on your environment, you might need to prepend `sudo` to Docker commands for them to work correctly. 
 
 ## Configuration
 
