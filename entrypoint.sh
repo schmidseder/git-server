@@ -15,7 +15,7 @@ run() {
 run $LINENO echo "Starting SSH-Server"
 
 # Write authorised_keys from environment variable
-if [ -n "${AUTHORIZED_KEYS:-}" ]; then
+if [ -n "${AUTHORIZED_KEYS:-}" ] && [ ! -f /home/git/.ssh/authorized_keys ]; then
   printf "%s\n" "$AUTHORIZED_KEYS" > /home/git/.ssh/authorized_keys
   chown git:git /home/git/.ssh/authorized_keys
   chmod 600 /home/git/.ssh/authorized_keys
