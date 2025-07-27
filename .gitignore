@@ -8,3 +8,5 @@
 /ssh_host_keys/**
 !/ssh_host_keys/
 !/ssh_host_keys/.gitkeep
+
+.env
