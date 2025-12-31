@@ -46,5 +46,11 @@ MaxAuthTries 3
 MaxSessions 2
 EOF
 
+# Generate SSH host keys only if they do not exist
+if [ ! -f /etc/ssh/ssh_host_ed25519_key ]; then
+  echo "Generating SSH host keys..."
+  ssh-keygen -A
+fi
+
 # SSH-Dienst starten
 exec /usr/sbin/sshd -D
