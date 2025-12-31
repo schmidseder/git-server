@@ -1,0 +1,10 @@
+# ignore repositories
+/repos/**
+# keep the directory and the .gitkeep file
+!/repos/
+!/repos/.gitkeep
+
+# ignore host keys directory
+/ssh_host_keys/**
+!/ssh_host_keys/
+!/ssh_host_keys/.gitkeep
