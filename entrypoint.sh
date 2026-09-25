@@ -1,18 +1,12 @@
 #!/bin/sh
 set -eu
 
-handle_error() {
-  echo "Ere $1: $2"
-  exit 1
-}
+echo "Starting Git SSH server..."
 
-run() {
-  LINE=$1
-  shift
-  "$@" || handle_error "$LINE" "$*"
-}
-
-run $LINENO echo "Starting SSH-Server"
+# Prepare SSH directory for the git user
+mkdir -p /home/git/.ssh
+chown git:git /home/git/.ssh
+chmod 700 /home/git/.ssh
 
 # Write authorised_keys from environment variable
 if [ -n "${AUTHORIZED_KEYS:-}" ] && [ ! -f /home/git/.ssh/authorized_keys ]; then
@@ -24,21 +18,13 @@ fi
 # write sshd_config
 cat <<EOF > /etc/ssh/sshd_config
 Port 22
-Protocol 2
 HostKey /etc/ssh/ssh_host_ed25519_key
-HostKey /etc/ssh/ssh_host_rsa_key
 PermitRootLogin no
 PasswordAuthentication no
 PubkeyAuthentication yes
 KbdInteractiveAuthentication no
 AllowUsers git
-#Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com
-#MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com
-#KexAlgorithms sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org
-#X11Forwarding no
 AllowTcpForwarding no
-#PermitTunnel no
-#UseDNS no
 ClientAliveInterval 300
 ClientAliveCountMax 2
 LoginGraceTime 30
@@ -49,8 +35,12 @@ EOF
 # Generate SSH host keys only if they do not exist
 if [ ! -f /etc/ssh/ssh_host_ed25519_key ]; then
   echo "Generating SSH host keys..."
-  ssh-keygen -A
+  ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N '' 
 fi
+
+# Validate SSH configuration before starting the server
+echo "Checking SSH configuration..."
+sshd -t
 
 # SSH-Dienst starten
 exec /usr/sbin/sshd -D
